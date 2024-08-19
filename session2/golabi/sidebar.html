@@ -1,0 +1,24 @@
+<div class="dashboard-nav">
+    <header><a href="#" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="#"
+                                                                               class="brand-logo"><i
+            class="fas fa-anchor"></i>
+            {% if session.username %} 
+            <span>Hello {{ session.username }} </span>
+            {% endif %}
+        </a></header>
+    <nav class="dashboard-nav-list"><a href="/index" class="dashboard-nav-item"><i class="fas fa-home"></i>
+        Home </a>
+        {% if session.authenticated %}
+            <div class="nav-item-divider"></div>
+            <a
+                  href="/logout" class="dashboard-nav-item"><i class="fas fa-sign-in-alt"></i> Logout </a>
+        {% else %}
+            <div class="nav-item-divider"></div>
+            <a
+                      href="/login" class="dashboard-nav-item"><i class="fas fa-sign-in-alt"></i> Login </a>
+            <div class="nav-item-divider"></div>
+            <a
+                    href="/signup" class="dashboard-nav-item"><i class="fas fa-sign-up-alt"></i> SignUp </a>
+        {% endif %}
+    </nav>
+</div>

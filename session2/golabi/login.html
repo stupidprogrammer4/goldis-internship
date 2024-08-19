@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+{% endblock head %}
+
+{% block body %}
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+      <h2 class="active"> <a href="/login">Login</a> </h2>
+      <h2 class="inactive underlineHover"> <a href="/signup">SignUp</a> </h2>
+  
+      <!-- Login Form -->
+      <form action="/login-post" method="post">
+        <input type="text" id="login" class="fadeIn second" name="username" placeholder="username">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+        <input type="submit" class="fadeIn fourth" value="Login">
+		{% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="error">
+                {% for msg in messages %}
+                    <li>{{ msg }}</li>    
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+      </form>
+  
+    </div>
+</div>
+{% endblock body %}

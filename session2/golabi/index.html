@@ -1,0 +1,137 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>index</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock head %}
+{% block body %}
+    {% include 'sidebar.html' %}
+    <div class="container">
+        <div class="user-info">
+            <header>
+                <div class="profile-image">
+                    <img src="{{ url_for('static', filename='profile-image.jpg') }}" alt="Your Name" id="profile-img">
+                </div>
+                <h1> {{ name }} </h1>
+                <p>Contact: {{ email }} | {{ phonenumber }} </p>
+                <input type="file" id="image-upload" style="display:none;" accept="image/*" onchange="changeImage(event)">
+                <!-- Add this button to your HTML -->
+                <button onclick="printResume()">Print to PDF</button>
+
+            </header>
+    
+            <section id="about">
+                <h2>About Me</h2>
+                <p> {{ about }} </p>
+            </section>
+            <!-- todo: implement edit for user info -->
+            <!-- <button onclick="">Edit UserInfo</button> -->
+        </div>
+
+        <!-- todo: implement edit experiences -->
+        <section id="experience">
+            <h2>Experience</h2>
+            <div id="experience-list">
+                {% if experiences %}
+                    {% for exp in experiences %}
+                        <div class="job">
+                            <h3> {{ exp[1] }} </h3>
+                            <p> {{ exp[2] }} </p>
+                            <p> {{ exp[4] }} - {{ exp[5] }} </p>
+                            <p> {{ exp[3] }} </p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p id="empty-exp"> no experience recorded! </p>
+                {% endif %}
+            </div>
+            {% if is_admin %}
+                <button id="add-experience-button" onclick="showExperienceForm()">Add Experience</button>
+                <div id="experience-form" style="display:none;">
+                    <input type="text" id="job-title" placeholder="Job Title">
+                    <input type="text" id="company-name" placeholder="Company Name">
+                    <textarea id="job-description" placeholder="Job Description"></textarea>
+                    <input type="date" id="start-date">
+                    <input type="date" id="end-date">
+                    <div class="button-group">
+                        <button onclick="hideExperienceForm()">Back</button>
+                        <button onclick="addExperience()">Add Experience</button>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- todo: implement edit educations -->
+        <section id="education">
+            <h2>Education</h2>
+            <div id="education-list">
+                {% if educations %}
+                    {% for edu in educations %}
+                        <div class="education-item">
+                            <h3> {{ edu[1] }} </h3>
+                            <p> {{ edu[2] }} </p>
+                            <p> {{ edu[3] }} - {{ edu[4] }} </p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p id="empty-edu"> no education recorded! </p>
+                {% endif %}
+            </div>
+            {% if is_admin %}
+                <button id="add-education-button" onclick="showEducationForm()">Add Education</button>
+                <div id="education-form" style="display:none;">
+                    <input type="text" id="degree-name" placeholder="Degree Name">
+                    <input type="text" id="institution-name" placeholder="Institution Name">
+                    <input type="date" id="start-date-ed">
+                    <input type="date" id="end-date-ed">
+                    <div class="button-group">
+                        <button onclick="hideEducationForm()">Back</button>
+                        <button onclick="addEducation()">Add Education</button>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- todo: implement edit skills -->
+        <section id="skills">
+            <h2>Skills</h2>
+            <div id="skills-list">
+                {% if skills %}
+                    {% for skill in skills %}
+                        <div class="skill">
+                            <span> {{ skill[0] }} </span>
+                            <div class="stars">
+                                {% for i in range(skill[1]) %}
+                                    <span class="star">&#9733;</span>
+                                {% endfor %}
+                                {% for i in range(5-skill[1]) %}
+                                    <span class="star">&#9734;</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p id="empty-skill"> no skill recorded! </p>
+                {% endif %}
+            </div>
+            {% if is_admin %}
+                <button id="add-skill-button" onclick="showSkillForm()">Add Skill</button>
+                <div id="skill-form" style="display:none;">
+                    <input type="text" id="skill-name" placeholder="Skill Name">
+                    <div class="stars" id="new-skill-stars">
+                        <span class="star add-star" onclick="setNewSkillRating(1)">&#9733;</span>
+                        <span class="star add-star" onclick="setNewSkillRating(2)">&#9733;</span>
+                        <span class="star add-star" onclick="setNewSkillRating(3)">&#9733;</span>
+                        <span class="star add-star" onclick="setNewSkillRating(4)">&#9733;</span>
+                        <span class="star add-star" onclick="setNewSkillRating(5)">&#9734;</span>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="hideSkillForm()">Back</button>
+                        <button onclick="addSkill()">Add Skill</button>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock body %}
